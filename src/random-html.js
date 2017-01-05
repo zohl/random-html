@@ -32,12 +32,20 @@ const generate = (options, state) => {
 };
 
 
-const render = (ident, p) => s => ((prefix, newline) => (typeof s == 'string')
+/** Transform intermediate structure to HTML-string
+
+   @arg {bool} ident - Whether to pretty-print HTML.
+   @arg {string} [p] - Prefix string (used only if `ident` is `true`).
+   @arg {Object} s - The structure in question.
+
+   @return {string} HTML.
+*/
+const renderHTML = (ident, p) => s => ((prefix, newline) => (typeof s == 'string')
   ? prefix + s + newline
   : (prefix + '<' + s.name
      + (Object.keys(s.props).map(key => ' ' + key + '="' + s.props[key] + '"')).join('')
      + '>' + newline
-     + s.children.map(render(ident, prefix + '  ')).join('')
+     + s.children.map(renderHTML(ident, prefix + '  ')).join('')
      + prefix + '</' + s.name + '>' + newline))(
   (ident ? (undefined === p ? '' : p) : '')
 , (ident ? '\n' : ''));
@@ -71,8 +79,8 @@ const randomHTML = (userOptions) => {
   , rng: seedrandom(options.seed || Math.random())
   };
 
-  return render(true)(generate(options, state));
+  return renderHTML(true)(generate(options, state));
 };
 
 
-export default randomHTML
+export {randomHTML, renderHTML}

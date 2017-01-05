@@ -2,7 +2,20 @@
 
 ### Table of Contents
 
+-   [renderHTML](#renderhtml)
 -   [randomHTML](#randomhtml)
+
+## renderHTML
+
+Transform intermediate structure to HTML-string
+
+**Parameters**
+
+-   `ident` **bool** Whether to pretty-print HTML.
+-   `p` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Prefix string (used only if `ident` is `true`).
+-   `s` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The structure in question.
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML.
 
 ## randomHTML
 

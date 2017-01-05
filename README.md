@@ -10,7 +10,7 @@ The library is under heavy development. Many things haven't been implemented yet
 
 ## Example
 ```javascript
-import randomHTML from 'random-html';
+import {randomHTML} from 'random-html';
 
 console.log(randomHTML({maxHeight: 3}));
 ```
