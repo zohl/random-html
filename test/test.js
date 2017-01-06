@@ -1,5 +1,37 @@
 import assert from 'assert';
-import {randomHTML} from '../src/index.js';
+import {renderHTML, randomHTML} from '../src/index.js';
+
+describe('renderHTML', () => {
+
+  it('works in simple cases', () => {
+    assert.equal(
+      '<div>foo</div>'
+    , renderHTML()({name: 'div', props: {}, children: ['foo']}));
+
+    assert.equal(
+      '<div><p>foo</p><p>bar</p></div>'
+      , renderHTML()({
+          name: 'div'
+        , props: {}
+        , children: [{
+            name: 'p'
+          , props: {}
+          , children: ['foo']
+        } , {
+            name: 'p'
+          , props: {}
+          , children: ['bar']
+        }]}));
+  });
+
+
+  it('encodes entities', () => {
+    assert.equal(
+      '<div>&quot;&amp;&apos;&lt;&gt;</div>'
+    , renderHTML({encodeEntities: true})({name: 'div', props: {}, children: ['"&\'<>']}));
+  });
+
+});
 
 
 describe('randomHTML', () => {

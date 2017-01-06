@@ -31,24 +31,42 @@ const generate = (options, state) => {
   return result;
 };
 
+const code_apos = "'".charCodeAt(0);
+const code_quot = '"'.charCodeAt(0);
+const code_lt   = '<'.charCodeAt(0);
+const code_gt   = '>'.charCodeAt(0);
+const code_amp  = '&'.charCodeAt(0);
+
+const encodeEntity = c => {
+  switch(c.charCodeAt(0)) {
+  case code_apos: return '&apos;';
+  case code_quot: return '&quot;';
+  case code_lt:   return '&lt;';
+  case code_gt:   return '&gt;';
+  case code_amp:  return '&amp;';
+  }
+};
+
 
 /** Transform intermediate structure to HTML-string
 
-   @arg {bool} ident - Whether to pretty-print HTML.
-   @arg {string} [p] - Prefix string (used only if `ident` is `true`).
+   @arg {Object} options - User-provided options to renderer.
+   @arg {bool} options.ident - Whether to pretty-print HTML.
+   @arg {bool} options.encodeEntities - Whether to encode XML(!)
+   entities.
    @arg {Object} s - The structure in question.
 
    @return {string} HTML.
 */
-const renderHTML = (ident, p) => s => ((prefix, newline) => (typeof s == 'string')
-  ? prefix + s + newline
+const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
+  ? prefix + (options.encodeEntities ? s.replace(/['"<>&]/g, encodeEntity): s) + newline
   : (prefix + '<' + s.name
      + (Object.keys(s.props).map(key => ' ' + key + '="' + s.props[key] + '"')).join('')
      + '>' + newline
-     + s.children.map(renderHTML(ident, prefix + '  ')).join('')
+     + s.children.map(renderHTML(Object.assign({}, options, {prefix: prefix + '  '}))).join('')
      + prefix + '</' + s.name + '>' + newline))(
-  (ident ? (undefined === p ? '' : p) : '')
-, (ident ? '\n' : ''));
+  (options && options.ident ? (undefined === options.prefix ? '' : options.prefix) : '')
+, (options && options.ident ? '\n' : ''));
 
 
 
