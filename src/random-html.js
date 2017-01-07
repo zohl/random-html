@@ -36,6 +36,7 @@ const code_quot = '"'.charCodeAt(0);
 const code_lt   = '<'.charCodeAt(0);
 const code_gt   = '>'.charCodeAt(0);
 const code_amp  = '&'.charCodeAt(0);
+const code_bang = '!'.charCodeAt(0);
 
 const encodeEntity = c => {
   switch(c.charCodeAt(0)) {
@@ -60,6 +61,7 @@ const encodeEntity = c => {
 */
 const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
   ? prefix + (options.encodeEntities ? s.replace(/['"<>&]/g, encodeEntity): s) + newline
+  : (s.name.toLowerCase() == '!doctype') ? (prefix + '<' + s.name + ' ' + s.children[0] + '>')
   : (prefix + '<' + s.name
      + (Object.keys(s.props).map(key => ' ' + key + '="' + s.props[key] + '"')).join('')
      + '>' + newline

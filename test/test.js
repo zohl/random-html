@@ -31,6 +31,12 @@ describe('renderHTML', () => {
     , renderHTML({encodeEntities: true})({name: 'div', props: {}, children: ['"&\'<>']}));
   });
 
+  it('respects doctype pseudo-tag', () => {
+    assert.equal(
+      '<!doctype html>'
+    , renderHTML()({name: '!doctype', props: {}, children: ['html']}));
+  });
+
 });
 
 

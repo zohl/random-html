@@ -11,8 +11,10 @@ Transform intermediate structure to HTML-string
 
 **Parameters**
 
--   `ident` **bool** Whether to pretty-print HTML.
--   `p` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Prefix string (used only if `ident` is `true`).
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** User-provided options to renderer.
+    -   `options.ident` **bool** Whether to pretty-print HTML.
+    -   `options.encodeEntities` **bool** Whether to encode XML(!)
+        entities.
 -   `s` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The structure in question.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML.

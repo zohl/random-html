@@ -1,6 +1,6 @@
 {
   "name": "random-html",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Random html snippets generator.",
   "main": "lib/index.js",
   "scripts": {
