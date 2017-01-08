@@ -37,6 +37,11 @@ describe('renderHTML', () => {
     , renderHTML()({name: '!doctype', props: {}, children: ['html']}));
   });
 
+  it('respects commentary pseudo-tag', () => {
+    assert.equal(
+      '<!-- this is a comment -->'
+    , renderHTML()({name: '!--', props: {}, children: [' this is a comment ']}));
+  });
 });
 
 

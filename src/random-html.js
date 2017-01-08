@@ -62,6 +62,7 @@ const encodeEntity = c => {
 const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
   ? prefix + (options.encodeEntities ? s.replace(/['"<>&]/g, encodeEntity): s) + newline
   : (s.name.toLowerCase() == '!doctype') ? (prefix + '<' + s.name + ' ' + s.children[0] + '>')
+  : (s.name == '!--') ? (prefix + '<!--' + s.children[0] + '-->')
   : (prefix + '<' + s.name
      + (Object.keys(s.props).map(key => ' ' + key + '="' + s.props[key] + '"')).join('')
      + '>' + newline
