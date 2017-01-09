@@ -1,13 +1,40 @@
 import seedrandom from 'seedrandom';
 
+// Bob Floyd's algorithm
+const randomSample = (m, n, rng) => {
+  var used = Array(n);
+
+  for (let i = n - m; i < n; ++i) {
+    let r = (rng() * (i + 1))|0;
+    r = (used[r]) ? i : r;
+    used[r] = true;
+  }
+
+  return used
+    .map((f, i) => f ? i : undefined)
+    .filter(i => undefined !== i);
+};
+
+const randomText = (options, state) => {
+  return 'text'; // TODO
+};
 
 const randomTagName = (options, state) => {
   return 'div'; // TODO
 };
 
 
+const allProps = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge', 'grault', 'garply'];
+
 const randomProps = (options, state) => {
-  return {}; // TODO
+  var result = {};
+
+  var cntProps = (state.rng() * (options.maxProps + 1))|0;
+  randomSample(cntProps, allProps.length, state.rng).forEach(i => {
+    result[allProps[i]] = randomText(options, state);
+  });
+
+  return result;
 };
 
 
@@ -22,7 +49,7 @@ const generate = (options, state) => {
       : (state.rng() * (options.maxWidth + 1))|0;
 
   result.children = (!cntChildren)
-    ? ["text"]
+    ? [randomText(options, state)]
     : [...Array(cntChildren).keys()].map(_ => generate(options, Object.assign({}, state, {
       height: 1 + state.height
     , parent: result.name
@@ -49,12 +76,15 @@ const encodeEntity = c => {
 };
 
 
-/** Transform intermediate structure to HTML-string
+/** Transform intermediate structure to HTML-string.
 
-   @arg {Object} options - User-provided options to renderer.
-   @arg {bool} options.ident - Whether to pretty-print HTML.
-   @arg {bool} options.encodeEntities - Whether to encode XML(!)
-   entities.
+   @arg {Object} [options] - User-provided options to renderer.
+
+   @arg {bool} [options.ident = false] - Whether to pretty-print HTML.
+
+   @arg {bool} [options.encodeEntities = false] - Whether to encode
+   XML(!) entities.
+
    @arg {Object} s - The structure in question.
 
    @return {string} HTML.
@@ -72,8 +102,7 @@ const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
 , (options && options.ident ? '\n' : ''));
 
 
-
-/** Generate random html snippet.
+/** Generate random html represented as object.
 
    @arg {Object} [userOptions] - User-provided parameters.
 
@@ -83,25 +112,44 @@ const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
    @arg {number} [userOptions.maxWidth = 3] - Maximum number of
    children for each node.
 
+   @arg {number} [userOptions.maxProps = 0] - Maximum number of
+   properties for each node.
+
    @arg {Object} [userOptions.rng = seedrandom(Math.random())] -
    Pseudo random number generator. If not specified, one with random
    seed will be used.
 
-   @return {string} HTML snippet.
+   @return {Object} HTML snippet.
 */
-const randomHTML = (userOptions) => {
+const randomHTMLObject = (userOptions) => {
   var defaultOptions = {
     maxWidth: 3
+  , maxProps: 0
   };
+
   var options = Object.assign({}, defaultOptions, userOptions || {});
 
   var state = {
     height: 0
-  , rng: seedrandom(options.seed || Math.random())
+  , rng: seedrandom((undefined !== options.seed) ? options.seed : Math.random())
   };
 
-  return renderHTML(true)(generate(options, state));
+  return generate(options, state);
 };
 
 
-export {randomHTML, renderHTML}
+/** Generate random html snippet.
+   @arg {Object} [generateOptions] - User-provided parameters (as in
+   `randomHTMLObject`).
+
+   @arg {Object} [renderOptions] - User-provided parameters (as in
+   `renderHTML`).
+
+   @return {string} HTML snippet.
+*/
+const randomHTML = (generateOptions, renderOptions) => {
+  return renderHTML(renderOptions)(randomHTMLObject(generateOptions));
+};
+
+
+export {randomHTML, randomHTMLObject, renderHTML}

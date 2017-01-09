@@ -1,5 +1,6 @@
 import assert from 'assert';
-import {renderHTML, randomHTML} from '../src/index.js';
+import {renderHTML, randomHTMLObject, randomHTML} from '../src/index.js';
+
 
 describe('renderHTML', () => {
 
@@ -45,7 +46,7 @@ describe('renderHTML', () => {
 });
 
 
-describe('randomHTML', () => {
+describe('randomHTML/randomHTMLObject', () => {
 
   it('generates something', () => {
     assert.ok(randomHTML({maxHeight: 3}).length > 0, 'generated text should not be empty');
@@ -68,5 +69,13 @@ describe('randomHTML', () => {
     assert.equal(
       randomHTML({maxHeight: 3, seed: seed})
     , randomHTML({maxHeight: 3, seed: seed}));
+  });
+
+  it('generates props', () => {
+    assert.ok(Object.keys(randomHTMLObject({
+      seed: 0.25
+    , maxProps: 4
+    , maxHeight: 0
+    }).props).length > 0, 'generated object should have non-empty props');
   });
 });

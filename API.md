@@ -3,25 +3,26 @@
 ### Table of Contents
 
 -   [renderHTML](#renderhtml)
+-   [randomHTMLObject](#randomhtmlobject)
 -   [randomHTML](#randomhtml)
 
 ## renderHTML
 
-Transform intermediate structure to HTML-string
+Transform intermediate structure to HTML-string.
 
 **Parameters**
 
--   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** User-provided options to renderer.
-    -   `options.ident` **bool** Whether to pretty-print HTML.
-    -   `options.encodeEntities` **bool** Whether to encode XML(!)
-        entities.
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** User-provided options to renderer.
+    -   `options.ident` **bool?** Whether to pretty-print HTML. (optional, default `false`)
+    -   `options.encodeEntities` **bool?** Whether to encode
+        XML(!) entities. (optional, default `false`)
 -   `s` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The structure in question.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML.
 
-## randomHTML
+## randomHTMLObject
 
-Generate random html snippet.
+Generate random html represented as object.
 
 **Parameters**
 
@@ -30,7 +31,22 @@ Generate random html snippet.
         tags.
     -   `userOptions.maxWidth` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Maximum number of
         children for each node. (optional, default `3`)
+    -   `userOptions.maxProps` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Maximum number of
+        properties for each node. (optional, default `0`)
     -   `userOptions.rng` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Pseudo random number generator. If not specified, one with random
         seed will be used. (optional, default `seedrandom(Math.random())`)
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** HTML snippet.
+
+## randomHTML
+
+Generate random html snippet.
+
+**Parameters**
+
+-   `generateOptions` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** User-provided parameters (as in
+    `randomHTMLObject`).
+-   `renderOptions` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** User-provided parameters (as in
+    `renderHTML`).
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML snippet.

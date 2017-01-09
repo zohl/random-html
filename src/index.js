@@ -1,4 +1,4 @@
-import {randomHTML, renderHTML} from './random-html';
+import {randomHTML, randomHTMLObject, renderHTML} from './random-html';
 
-export {randomHTML, renderHTML}
+export {randomHTML, randomHTMLObject, renderHTML}
 
