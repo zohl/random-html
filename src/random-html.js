@@ -15,9 +15,26 @@ const randomSample = (m, n, rng) => {
     .filter(i => undefined !== i);
 };
 
-const randomText = (options, state) => {
-  return 'text'; // TODO
+
+const randomWord = (options, state) => {
+  const code_a = 'a'.charCodeAt(0);
+  const code_z = 'z'.charCodeAt(0);
+
+  var numLetters = options.minWordLength + (state.rng() * (
+    options.maxWordLength - options.minWordLength + 1))|0;
+
+  var letterCodes = [...Array(numLetters)].map(_ =>
+    code_a + (state.rng() * (code_z - code_a + 1))|0);
+
+  return String.fromCharCode.apply(null, letterCodes);
 };
+
+
+const randomText = (options, state) => {
+  var numWords = 1 + (state.rng() * options.maxWords)|0;
+  return [...Array(numWords)].map(_ => randomWord(options, state)).join(' ');
+};
+
 
 const randomTagName = (options, state) => {
   return 'div'; // TODO
@@ -115,6 +132,15 @@ const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
    @arg {number} [userOptions.maxProps = 0] - Maximum number of
    properties for each node.
 
+   @arg {number} [userOptions.maxWords = 2] - Maximum number of
+   words for each text node.
+
+   @arg {number} [userOptions.minWordLength = 2] - Minimum number of
+   letters for each word.
+
+   @arg {number} [userOptions.maxWordLength = 8] - Maximum number of
+   letters for each word.
+
    @arg {Object} [userOptions.rng = seedrandom(Math.random())] -
    Pseudo random number generator. If not specified, one with random
    seed will be used.
@@ -125,6 +151,9 @@ const randomHTMLObject = (userOptions) => {
   var defaultOptions = {
     maxWidth: 3
   , maxProps: 0
+  , maxWords: 2
+  , minWordLength: 2
+  , maxWordLength: 8
   };
 
   var options = Object.assign({}, defaultOptions, userOptions || {});
