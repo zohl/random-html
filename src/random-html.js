@@ -1,4 +1,5 @@
 import seedrandom from 'seedrandom';
+import {htmlTags, htmlTagProps} from './constants';
 
 // Bob Floyd's algorithm
 const randomSample = (m, n, rng) => {
@@ -37,18 +38,16 @@ const randomText = (options, state) => {
 
 
 const randomTagName = (options, state) => {
-  return 'div'; // TODO
+  return htmlTags[(htmlTags.length * state.rng())|0];
 };
 
-
-const allProps = ['foo', 'bar', 'baz', 'qux', 'quux', 'corge', 'grault', 'garply'];
 
 const randomProps = (options, state) => {
   var result = {};
 
   var cntProps = (state.rng() * (options.maxProps + 1))|0;
-  randomSample(cntProps, allProps.length, state.rng).forEach(i => {
-    result[allProps[i]] = randomText(options, state);
+  randomSample(cntProps, htmlTagProps.length, state.rng).forEach(i => {
+    result[htmlTagProps[i]] = randomText(options, state);
   });
 
   return result;
@@ -182,3 +181,4 @@ const randomHTML = (generateOptions, renderOptions) => {
 
 
 export {randomHTML, randomHTMLObject, renderHTML}
+

@@ -64,8 +64,7 @@ describe('randomHTML/randomHTMLObject', () => {
 
   it('deterministic with fixed seed', () => {
     var seed = Math.random();
-    console.log(randomHTML({maxHeight: 3, seed: seed}));
-
+    console.log('Seed:', seed);
     assert.equal(
       randomHTML({maxHeight: 3, seed: seed})
     , randomHTML({maxHeight: 3, seed: seed}));
