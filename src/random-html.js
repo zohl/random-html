@@ -111,9 +111,11 @@ const renderHTML = options => s => ((prefix, newline) => (typeof s == 'string')
   : (s.name == '!--') ? (prefix + '<!--' + s.children[0] + '-->')
   : (prefix + '<' + s.name
      + (Object.keys(s.props).map(key => ' ' + key + '="' + s.props[key] + '"')).join('')
-     + '>' + newline
-     + s.children.map(renderHTML(Object.assign({}, options, {prefix: prefix + '  '}))).join('')
-     + prefix + '</' + s.name + '>' + newline))(
+     + ((!s.children.length)
+        ? '/>' + newline
+        : '>' + newline
+          + s.children.map(renderHTML(Object.assign({}, options, {prefix: prefix + '  '}))).join('')
+          + prefix + '</' + s.name + '>' + newline)))(
   (options && options.ident ? (undefined === options.prefix ? '' : options.prefix) : '')
 , (options && options.ident ? '\n' : ''));
 

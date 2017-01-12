@@ -10,6 +10,10 @@ describe('renderHTML', () => {
     , renderHTML()({name: 'div', props: {}, children: ['foo']}));
 
     assert.equal(
+      '<br/>'
+    , renderHTML()({name: 'br', props: {}, children: []}));
+
+    assert.equal(
       '<div><p>foo</p><p>bar</p></div>'
       , renderHTML()({
           name: 'div'
