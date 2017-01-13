@@ -33,6 +33,12 @@ Generate random html represented as object.
         children for each node. (optional, default `3`)
     -   `userOptions.maxProps` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Maximum number of
         properties for each node. (optional, default `0`)
+    -   `userOptions.maxWords` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Maximum number of
+        words for each text node. (optional, default `2`)
+    -   `userOptions.minWordLength` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Minimum number of
+        letters for each word. (optional, default `2`)
+    -   `userOptions.maxWordLength` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)?** Maximum number of
+        letters for each word. (optional, default `8`)
     -   `userOptions.rng` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** Pseudo random number generator. If not specified, one with random
         seed will be used. (optional, default `seedrandom(Math.random())`)
 

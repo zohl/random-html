@@ -4,9 +4,10 @@
 
 ## Description
 Random html snippets generator.
+This library is intended for testing purposes only, as resulting html is not guaranteed to be valid.
 
 ## Status
-The library is under heavy development. Many things haven't been implemented yet.
+The library is ready to use. No breaking changes should be expected.
 
 ## Example
 ```javascript
